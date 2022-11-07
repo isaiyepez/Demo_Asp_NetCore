@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Demo_Asp_NetCore.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo_Asp_NetCore.Controllers
@@ -29,6 +30,12 @@ namespace Demo_Asp_NetCore.Controllers
         public IActionResult GetWarehouseFromRoute([FromRoute] int warehouseId, [FromRoute] string warehouseName)
         {
             return Ok($"Hello user id from route {warehouseId}, wharehouse {warehouseName}");
+        }
+
+        [HttpPost("CreateWarehouse")]
+        public IActionResult CreateWarehouse(Warehouse warehouse)
+        {
+            return Ok($"Hello user id {warehouse.Id}, and username {warehouse.Name}");
         }
     }
 }
