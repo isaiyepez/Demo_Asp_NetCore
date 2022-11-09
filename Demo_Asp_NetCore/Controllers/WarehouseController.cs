@@ -1,6 +1,8 @@
-﻿using Demo_Asp_NetCore.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Model;
+using Services.Contracts;
+using Services.Services;
 
 namespace Demo_Asp_NetCore.Controllers
 {
@@ -8,16 +10,29 @@ namespace Demo_Asp_NetCore.Controllers
     [ApiController]
     public class WarehouseController : ControllerBase
     {
-        public WarehouseController()
-        {
+        private readonly IWarehouseService _warehouseService;
 
+        public WarehouseController(IWarehouseService warehouseService)
+        {
+            _warehouseService = warehouseService;
         }
 
-        [HttpGet("GetWarehouse")]
-        public IActionResult GetWarehouse()
+        //Usualmente se inyecta la dependencia por medio del constructor, pero
+        //si solo vamos a usar un servicio en muy pocos métodos, conviene más invocar el 
+        //service dentro del método en particular que lo necesita, en lugar de inyectarlo
+        //en el constructor del controller
+        [HttpGet("GetWarehousesFromService")]
+        public IActionResult GetWarehousesFromService([FromServices] IWarehouseService _warehouseService2)
         {
-            return Ok("Hello World!");
+            return Ok(_warehouseService2.GetWarehouses());
         }
+
+        [HttpGet("GetWarehouses")]
+        public IActionResult GetWarehouses()
+        {
+            return Ok(_warehouseService.GetWarehouses());
+        }
+
 
         //Es recomendable agregar "From query" decorator por legibilidad
         [HttpGet("GetWarehouseFromQuery")]

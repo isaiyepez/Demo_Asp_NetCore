@@ -1,4 +1,4 @@
-﻿namespace Demo_Asp_NetCore.Models
+﻿namespace Model
 {
     public class Warehouse
     {

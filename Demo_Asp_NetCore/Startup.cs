@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Services.Contracts;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,8 @@ namespace Demo_Asp_NetCore
         {
 
             services.AddControllers();
+            services.AddScoped<IWarehouseService, WarehouseService>();
+            // Log, Ilogger usualmente se define como transient para que exista uno por request
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo_Asp_NetCore", Version = "v1" });
